@@ -1,0 +1,26 @@
+{
+	"name": "OnPremXMLDB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OnPremSQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Data_XMLFormat",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "XMLFormatData"
+		}
+	}
+}
