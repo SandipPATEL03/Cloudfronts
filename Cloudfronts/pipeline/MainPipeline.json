@@ -231,16 +231,6 @@
 							},
 							{
 								"source": {
-									"name": "CreditLimit",
-									"type": "Decimal"
-								},
-								"sink": {
-									"name": "creditlimit_base",
-									"type": "Decimal"
-								}
-							},
-							{
-								"source": {
 									"name": "EmailId",
 									"type": "String"
 								},
