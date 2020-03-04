@@ -83,6 +83,14 @@
 						"destination": {
 							"fileName": "dboAccounts.csv"
 						}
+					},
+					{
+						"source": {
+							"table": "Account1"
+						},
+						"destination": {
+							"fileName": "dboAccounts1.csv"
+						}
 					}
 				]
 			}
