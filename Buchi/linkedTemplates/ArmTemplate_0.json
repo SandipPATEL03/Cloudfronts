@@ -118,7 +118,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OnPremXMLDB')]",
+			"name": "[concat(parameters('factoryName'), '/OnPremAccount')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -141,7 +141,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "XMLFormatData"
+					"table": "Account"
 				}
 			},
 			"dependsOn": [
@@ -149,7 +149,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OnPremXMLDB2')]",
+			"name": "[concat(parameters('factoryName'), '/OnPremAccount1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -172,7 +172,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "XMLFormatData2"
+					"table": "Account1"
 				}
 			},
 			"dependsOn": [
@@ -216,7 +216,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "OnPremXMLDB",
+								"referenceName": "OnPremAccount",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -260,7 +260,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "OnPremXMLDB2",
+								"referenceName": "OnPremAccount1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -277,9 +277,9 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OnPremXMLDB')]",
+				"[concat(variables('factoryId'), '/datasets/OnPremAccount')]",
 				"[concat(variables('factoryId'), '/datasets/JSON_File')]",
-				"[concat(variables('factoryId'), '/datasets/OnPremXMLDB2')]"
+				"[concat(variables('factoryId'), '/datasets/OnPremAccount1')]"
 			]
 		},
 		{
@@ -296,6 +296,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "JSON_File",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
 						}
 					],
 					"sinks": [
@@ -307,8 +314,12 @@
 							"name": "sink1"
 						}
 					],
-					"transformations": [],
-					"script": "source(output(\n\t\tData_XMLFormat as string,\n\t\tID as boolean\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\trowUrlColumn: 'FileName',\n\tunquotedColumnNames: true,\n\twildcardPaths:['*.json']) ~> source1\nsource1 sink(input(\n\t\tAccountNumber as integer,\n\t\tname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tAccountNumber = ID,\n\t\tname = Data_XMLFormat\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+					"transformations": [
+						{
+							"name": "Union1"
+						}
+					],
+					"script": "source(output(\n\t\tData_XMLFormat as string,\n\t\tID as boolean\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\trowUrlColumn: 'FileName',\n\tunquotedColumnNames: true,\n\twildcardPaths:['*.json']) ~> source1\nsource(output(\n\t\tData_XMLFormat as string,\n\t\tID as boolean\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:['*json']) ~> source2\nsource1 union(byName: true)~> Union1\nUnion1 sink(input(\n\t\tAccountNumber as integer,\n\t\tname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tAccountNumber = ID,\n\t\tname = Data_XMLFormat\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 				}
 			},
 			"dependsOn": [
@@ -341,6 +352,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"source1": {},
+									"source2": {},
 									"sink1": {}
 								}
 							},
