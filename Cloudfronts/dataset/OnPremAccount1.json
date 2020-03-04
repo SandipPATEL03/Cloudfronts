@@ -1,5 +1,5 @@
 {
-	"name": "OnPremXMLDB2",
+	"name": "OnPremAccount1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OnPremSQLServer",
@@ -20,7 +20,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "XMLFormatData2"
+			"table": "Account1"
 		}
 	}
 }

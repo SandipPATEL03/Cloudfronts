@@ -33,7 +33,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "OnPremXMLDB",
+						"referenceName": "OnPremAccount",
 						"type": "DatasetReference"
 					}
 				],
@@ -75,7 +75,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "OnPremXMLDB2",
+						"referenceName": "OnPremAccount1",
 						"type": "DatasetReference"
 					}
 				],
