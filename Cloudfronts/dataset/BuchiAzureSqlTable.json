@@ -1,0 +1,12 @@
+{
+	"name": "BuchiAzureSqlTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BuchiAzureSqlDataBase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
