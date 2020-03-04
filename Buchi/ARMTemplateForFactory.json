@@ -111,7 +111,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "JSON_File",
+								"referenceName": "Blob_JsonDataset",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -155,7 +155,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "JSON_File",
+								"referenceName": "Blob_JsonDataset",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -166,8 +166,57 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/OnPremAccount')]",
-				"[concat(variables('factoryId'), '/datasets/JSON_File')]",
+				"[concat(variables('factoryId'), '/datasets/Blob_JsonDataset')]",
 				"[concat(variables('factoryId'), '/datasets/OnPremAccount1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Blob_CSVDatast')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "testcontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Blob_JsonDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "testcontainer"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
 			]
 		},
 		{
@@ -199,29 +248,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/BuchiAzureSqlDataBase')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/JSON_File')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "testcontainer"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
 			]
 		},
 		{
@@ -335,14 +361,14 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "JSON_File",
+								"referenceName": "Blob_JsonDataset",
 								"type": "DatasetReference"
 							},
 							"name": "source1"
 						},
 						{
 							"dataset": {
-								"referenceName": "JSON_File",
+								"referenceName": "Blob_JsonDataset",
 								"type": "DatasetReference"
 							},
 							"name": "source2"
@@ -366,7 +392,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/JSON_File')]",
+				"[concat(variables('factoryId'), '/datasets/Blob_JsonDataset')]",
 				"[concat(variables('factoryId'), '/datasets/BuchiAzureSqlTable')]"
 			]
 		}
