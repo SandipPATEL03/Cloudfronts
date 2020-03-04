@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
 		},
+		"BuchiAzureSqlDataBase_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BuchiAzureSqlDataBase'"
+		},
 		"OnPremSQLServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremSQLServer'"
@@ -44,6 +48,9 @@
 					},
 					"AzureBlobStorage_connectionString": {
 						"value": "[parameters('AzureBlobStorage_connectionString')]"
+					},
+					"BuchiAzureSqlDataBase_connectionString": {
+						"value": "[parameters('BuchiAzureSqlDataBase_connectionString')]"
 					},
 					"OnPremSQLServer_connectionString": {
 						"value": "[parameters('OnPremSQLServer_connectionString')]"

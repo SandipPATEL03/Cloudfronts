@@ -8,6 +8,9 @@
 		"AzureBlobStorage_connectionString": {
 			"value": ""
 		},
+		"BuchiAzureSqlDataBase_connectionString": {
+			"value": ""
+		},
 		"OnPremSQLServer_connectionString": {
 			"value": ""
 		},
