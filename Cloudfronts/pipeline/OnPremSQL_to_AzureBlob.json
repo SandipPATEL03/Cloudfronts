@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "OnPremSQL_to_AzureBlob",
 	"properties": {
 		"activities": [
 			{
