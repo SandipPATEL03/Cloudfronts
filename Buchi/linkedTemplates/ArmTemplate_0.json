@@ -438,7 +438,7 @@
 									"table": "Account"
 								},
 								"destination": {
-									"fileName": "dboAccounts.txt"
+									"fileName": "dboAccounts.csv"
 								}
 							}
 						]
