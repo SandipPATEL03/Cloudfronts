@@ -74,205 +74,95 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "OnPremSQLAccount_to_AzureBlobCSV",
-						"type": "Copy",
+						"name": "ForEach1",
+						"type": "ForEach",
 						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"queryTimeout": "02:00:00"
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
 							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".csv"
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "SqlServerSource",
+											"queryTimeout": "02:00:00"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "OnPremAccount",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_table": {
+													"value": "@item().source.table",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Blob_CSVDatast",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_fileName": {
+													"value": "@item().destination.table",
+													"type": "Expression"
+												}
+											}
+										}
+									]
 								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "array",
+						"defaultValue": [
 							{
-								"referenceName": "OnPremAccount",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Blob_CSVDatast",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "OnPremSQLAccount_to_AzureBlobCSV_copy1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
+								"source": {
+									"table": "Accounts"
 								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".csv"
+								"destination": {
+									"fileName": "dboAccounts.txt"
 								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "OnPremAccount1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Blob_CSVDatast",
-								"type": "DatasetReference",
-								"parameters": {}
 							}
 						]
 					}
-				],
+				},
 				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/OnPremAccount')]",
-				"[concat(variables('factoryId'), '/datasets/Blob_CSVDatast')]",
-				"[concat(variables('factoryId'), '/datasets/OnPremAccount1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OnPremSQL_to_AzureBlob')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "OnPremSQL_to_Blob_XMLDB",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings",
-									"quoteAllText": true
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "OnPremAccount",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Blob_JsonDataset",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "OnPremSQL_to_Blob_XMLDB2",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings",
-									"quoteAllText": true
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "OnPremAccount1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Blob_JsonDataset",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OnPremAccount')]",
-				"[concat(variables('factoryId'), '/datasets/Blob_JsonDataset')]",
-				"[concat(variables('factoryId'), '/datasets/OnPremAccount1')]"
+				"[concat(variables('factoryId'), '/datasets/Blob_CSVDatast')]"
 			]
 		},
 		{
@@ -415,11 +305,20 @@
 					"referenceName": "AzureBlobStorage",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"cw_fileName": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().cw_fileName",
+							"type": "Expression"
+						},
 						"container": "testcontainer"
 					},
 					"columnDelimiter": ",",
@@ -495,6 +394,11 @@
 					"referenceName": "OnPremSQLServer",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"cw_table": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "SqlServerTable",
 				"schema": [
@@ -510,7 +414,10 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "Account"
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": [
