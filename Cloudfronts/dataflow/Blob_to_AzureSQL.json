@@ -1,0 +1,31 @@
+{
+	"name": "Blob_to_AzureSQL",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Blob_CSVDatast",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "Blob_CSVDatast",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "Join1"
+				}
+			],
+			"script": "source(output(\n\t\tAccountId as short,\n\t\tCode as string,\n\t\tName as string,\n\t\tCountry as string,\n\t\tCity as string,\n\t\tNationality as string,\n\t\tCurrency as string,\n\t\tAddress1 as string,\n\t\tAddress2 as string,\n\t\tAddress3 as string,\n\t\tPhoneNo as long,\n\t\tEmailId as string,\n\t\tCreditLimit as double,\n\t\tCreditType as string,\n\t\tDuePeriod as boolean,\n\t\tActive as boolean,\n\t\tEnableMultipleCurrency as boolean,\n\t\tSegment as string,\n\t\tEnableSpecialPrice as string,\n\t\tSpecialPriceType as string,\n\t\tSpecialDiscountPercent as string,\n\t\tPorted as boolean,\n\t\tGSTTIN as string,\n\t\tOutstanding as string,\n\t\tPaymentTerms as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:['dbo.Account.csv']) ~> source1\nsource(output(\n\t\tAccountId as short,\n\t\tCode as string,\n\t\tName as string,\n\t\tCountry as string,\n\t\tCity as string,\n\t\tNationality as string,\n\t\tCurrency as string,\n\t\tAddress1 as string,\n\t\tAddress2 as string,\n\t\tAddress3 as string,\n\t\tPhoneNo as string,\n\t\tEmailId as string,\n\t\tCreditLimit as double,\n\t\tCreditType as string,\n\t\tDuePeriod as short,\n\t\tActive as boolean,\n\t\tEnableMultipleCurrency as boolean,\n\t\tSegment as string,\n\t\tEnableSpecialPrice as string,\n\t\tSpecialPriceType as string,\n\t\tSpecialDiscountPercent as string,\n\t\tPorted as boolean,\n\t\tGSTTIN as string,\n\t\tOutstanding as double,\n\t\tPaymentTerms as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:['dbo.Account1.csv']) ~> source2\nsource1, source2 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1"
+		}
+	}
+}
