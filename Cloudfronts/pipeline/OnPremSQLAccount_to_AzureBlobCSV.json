@@ -78,7 +78,7 @@
 				"defaultValue": [
 					{
 						"source": {
-							"table": "Accounts"
+							"table": "Account"
 						},
 						"destination": {
 							"fileName": "dboAccounts.txt"
