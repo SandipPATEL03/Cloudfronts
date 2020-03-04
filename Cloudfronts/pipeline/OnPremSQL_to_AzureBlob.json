@@ -39,7 +39,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "JSON_File",
+						"referenceName": "Blob_JsonDataset",
 						"type": "DatasetReference"
 					}
 				]
@@ -81,7 +81,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "JSON_File",
+						"referenceName": "Blob_JsonDataset",
 						"type": "DatasetReference"
 					}
 				]
