@@ -5,6 +5,11 @@
 			"referenceName": "OnPremSQLServer",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"cw_table": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [
@@ -20,7 +25,10 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "Account"
+			"table": {
+				"value": "@dataset().cw_table",
+				"type": "Expression"
+			}
 		}
 	}
 }
