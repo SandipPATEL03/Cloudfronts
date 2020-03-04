@@ -64,6 +64,137 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_dst_Account')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BuchiAzureSqlDataBase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "AccountId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Country",
+						"type": "varchar"
+					},
+					{
+						"name": "City",
+						"type": "varchar"
+					},
+					{
+						"name": "Nationality",
+						"type": "varchar"
+					},
+					{
+						"name": "Currency",
+						"type": "varchar"
+					},
+					{
+						"name": "Address1",
+						"type": "varchar"
+					},
+					{
+						"name": "Address2",
+						"type": "varchar"
+					},
+					{
+						"name": "Address3",
+						"type": "varchar"
+					},
+					{
+						"name": "PhoneNo",
+						"type": "varchar"
+					},
+					{
+						"name": "EmailId",
+						"type": "varchar"
+					},
+					{
+						"name": "CreditLimit",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "CreditType",
+						"type": "varchar"
+					},
+					{
+						"name": "DuePeriod",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Active",
+						"type": "bit"
+					},
+					{
+						"name": "EnableMultipleCurrency",
+						"type": "bit"
+					},
+					{
+						"name": "Segment",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EnableSpecialPrice",
+						"type": "bit"
+					},
+					{
+						"name": "SpecialPriceType",
+						"type": "varchar"
+					},
+					{
+						"name": "SpecialDiscountPercent",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Ported",
+						"type": "bit"
+					},
+					{
+						"name": "GSTTIN",
+						"type": "varchar"
+					},
+					{
+						"name": "Outstanding",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "PaymentTerms",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Account_DST"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BuchiAzureSqlDataBase')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Blob_CSVDatast')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -239,262 +370,7 @@
 									"fileExtension": ".csv"
 								}
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "AccountId",
-											"type": "Int32"
-										},
-										"sink": {
-											"type": "Int32",
-											"ordinal": 1
-										}
-									},
-									{
-										"source": {
-											"name": "Code",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 2
-										}
-									},
-									{
-										"source": {
-											"name": "Name",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 3
-										}
-									},
-									{
-										"source": {
-											"name": "Country",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 4
-										}
-									},
-									{
-										"source": {
-											"name": "City",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 5
-										}
-									},
-									{
-										"source": {
-											"name": "Nationality",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 6
-										}
-									},
-									{
-										"source": {
-											"name": "Currency",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 7
-										}
-									},
-									{
-										"source": {
-											"name": "Address1",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 8
-										}
-									},
-									{
-										"source": {
-											"name": "Address2",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 9
-										}
-									},
-									{
-										"source": {
-											"name": "Address3",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 10
-										}
-									},
-									{
-										"source": {
-											"name": "PhoneNo",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 11
-										}
-									},
-									{
-										"source": {
-											"name": "EmailId",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 12
-										}
-									},
-									{
-										"source": {
-											"name": "CreditLimit",
-											"type": "Decimal"
-										},
-										"sink": {
-											"type": "Decimal",
-											"ordinal": 13
-										}
-									},
-									{
-										"source": {
-											"name": "CreditType",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 14
-										}
-									},
-									{
-										"source": {
-											"name": "DuePeriod",
-											"type": "Int32"
-										},
-										"sink": {
-											"type": "Int32",
-											"ordinal": 15
-										}
-									},
-									{
-										"source": {
-											"name": "Active",
-											"type": "Boolean"
-										},
-										"sink": {
-											"type": "Boolean",
-											"ordinal": 16
-										}
-									},
-									{
-										"source": {
-											"name": "EnableMultipleCurrency",
-											"type": "Boolean"
-										},
-										"sink": {
-											"type": "Boolean",
-											"ordinal": 17
-										}
-									},
-									{
-										"source": {
-											"name": "Segment",
-											"type": "Int32"
-										},
-										"sink": {
-											"type": "Int32",
-											"ordinal": 18
-										}
-									},
-									{
-										"source": {
-											"name": "EnableSpecialPrice",
-											"type": "Boolean"
-										},
-										"sink": {
-											"type": "Boolean",
-											"ordinal": 19
-										}
-									},
-									{
-										"source": {
-											"name": "SpecialPriceType",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 20
-										}
-									},
-									{
-										"source": {
-											"name": "SpecialDiscountPercent",
-											"type": "Decimal"
-										},
-										"sink": {
-											"type": "Decimal",
-											"ordinal": 21
-										}
-									},
-									{
-										"source": {
-											"name": "Ported",
-											"type": "Boolean"
-										},
-										"sink": {
-											"type": "Boolean",
-											"ordinal": 22
-										}
-									},
-									{
-										"source": {
-											"name": "GSTTIN",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 23
-										}
-									},
-									{
-										"source": {
-											"name": "Outstanding",
-											"type": "Decimal"
-										},
-										"sink": {
-											"type": "Decimal",
-											"ordinal": 24
-										}
-									},
-									{
-										"source": {
-											"name": "PaymentTerms",
-											"type": "String"
-										},
-										"sink": {
-											"type": "String",
-											"ordinal": 25
-										}
-									}
-								]
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
@@ -921,6 +797,40 @@
 				"[concat(variables('factoryId'), '/datasets/OnPremAccount')]",
 				"[concat(variables('factoryId'), '/datasets/Blob_JsonDataset')]",
 				"[concat(variables('factoryId'), '/datasets/OnPremAccount1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSV_to_AzureSQLDB')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Blob_CSVDatast",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_dst_Account",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\t{_col0_} as short,\n\t\t{_col1_} as string,\n\t\t{_col2_} as string,\n\t\t{_col3_} as string,\n\t\t{_col4_} as string,\n\t\t{_col5_} as string,\n\t\t{_col6_} as string,\n\t\t{_col7_} as string,\n\t\t{_col8_} as string,\n\t\t{_col9_} as string,\n\t\t{_col10_} as long,\n\t\t{_col11_} as string,\n\t\t{_col12_} as double,\n\t\t{_col13_} as string,\n\t\t{_col14_} as boolean,\n\t\t{_col15_} as boolean,\n\t\t{_col16_} as boolean,\n\t\t{_col17_} as string,\n\t\t{_col18_} as string,\n\t\t{_col19_} as string,\n\t\t{_col20_} as string,\n\t\t{_col21_} as boolean,\n\t\t{_col22_} as string,\n\t\t{_col23_} as string,\n\t\t{_col24_} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\twildcardPaths:['*.csv']) ~> source1\nsource1 sink(input(\n\t\tAccountId as integer,\n\t\tCode as string,\n\t\tName as string,\n\t\tCountry as string,\n\t\tCity as string,\n\t\tNationality as string,\n\t\tCurrency as string,\n\t\tAddress1 as string,\n\t\tAddress2 as string,\n\t\tAddress3 as string,\n\t\tPhoneNo as string,\n\t\tEmailId as string,\n\t\tCreditLimit as decimal(18,2),\n\t\tCreditType as string,\n\t\tDuePeriod as integer,\n\t\tActive as boolean,\n\t\tEnableMultipleCurrency as boolean,\n\t\tSegment as integer,\n\t\tEnableSpecialPrice as boolean,\n\t\tSpecialPriceType as string,\n\t\tSpecialDiscountPercent as decimal(18,2),\n\t\tPorted as boolean,\n\t\tGSTTIN as string,\n\t\tOutstanding as decimal(18,2),\n\t\tPaymentTerms as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tAccountId = {_col0_},\n\t\tCode = {_col1_},\n\t\tName = {_col2_},\n\t\tCountry = {_col3_},\n\t\tCity = {_col4_},\n\t\tNationality = {_col5_},\n\t\tCurrency = {_col6_},\n\t\tAddress1 = {_col7_},\n\t\tAddress2 = {_col8_},\n\t\tAddress3 = {_col9_},\n\t\tPhoneNo = {_col10_},\n\t\tEmailId = {_col11_},\n\t\tCreditLimit = {_col12_},\n\t\tCreditType = {_col13_},\n\t\tDuePeriod = {_col14_},\n\t\tActive = {_col15_},\n\t\tEnableMultipleCurrency = {_col16_},\n\t\tSegment = {_col17_},\n\t\tEnableSpecialPrice = {_col18_},\n\t\tSpecialPriceType = {_col19_},\n\t\tSpecialDiscountPercent = {_col20_},\n\t\tPorted = {_col21_},\n\t\tGSTTIN = {_col22_},\n\t\tOutstanding = {_col23_},\n\t\t{_col23_}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Blob_CSVDatast')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSql_dst_Account')]"
 			]
 		},
 		{
