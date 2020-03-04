@@ -1,0 +1,15 @@
+{
+	"name": "CFT130Accounts",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DynamicsCRMCFT130",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DynamicsEntity",
+		"schema": [],
+		"typeProperties": {
+			"entityName": "account"
+		}
+	}
+}
