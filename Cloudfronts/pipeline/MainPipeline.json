@@ -46,7 +46,7 @@
 				]
 			},
 			{
-				"name": "Copy data1",
+				"name": "SQLAccounts_to_AzureBlob1",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -87,6 +87,29 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Blob_to_AzureSQL",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Blob_to_AzureSQL",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
 			}
 		],
 		"annotations": []
