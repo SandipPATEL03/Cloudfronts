@@ -11,8 +11,14 @@
 		"BuchiAzureSqlDataBase_connectionString": {
 			"value": ""
 		},
+		"DynamicsCRMCFT130_password": {
+			"value": ""
+		},
 		"OnPremSQLServer_connectionString": {
 			"value": ""
+		},
+		"DynamicsCRMCFT130_properties_typeProperties_username": {
+			"value": "crmadmin@cft130.onmicrosoft.com"
 		}
 	}
 }

@@ -15,9 +15,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BuchiAzureSqlDataBase'"
 		},
+		"DynamicsCRMCFT130_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'DynamicsCRMCFT130'"
+		},
 		"OnPremSQLServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremSQLServer'"
+		},
+		"DynamicsCRMCFT130_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "crmadmin@cft130.onmicrosoft.com"
 		},
 		"containerUri": {
 			"type": "string",
@@ -52,8 +60,14 @@
 					"BuchiAzureSqlDataBase_connectionString": {
 						"value": "[parameters('BuchiAzureSqlDataBase_connectionString')]"
 					},
+					"DynamicsCRMCFT130_password": {
+						"value": "[parameters('DynamicsCRMCFT130_password')]"
+					},
 					"OnPremSQLServer_connectionString": {
 						"value": "[parameters('OnPremSQLServer_connectionString')]"
+					},
+					"DynamicsCRMCFT130_properties_typeProperties_username": {
+						"value": "[parameters('DynamicsCRMCFT130_properties_typeProperties_username')]"
 					}
 				}
 			},
