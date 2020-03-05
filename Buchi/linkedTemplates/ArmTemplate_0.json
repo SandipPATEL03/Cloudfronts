@@ -898,6 +898,298 @@
 								"mappings": [
 									{
 										"source": {
+											"name": "Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "address1_country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Address1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "address1_line1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "City",
+											"type": "String"
+										},
+										"sink": {
+											"name": "address1_city",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Address3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "address1_line3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Address2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "address1_line2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PhoneNo",
+											"type": "String"
+										},
+										"sink": {
+											"name": "telephone1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EmailId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "emailaddress1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountId"
+										},
+										"sink": {
+											"name": "accountnumber"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSql_dst_Account",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CFT130Accounts",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/OnPremAccount')]",
+				"[concat(variables('factoryId'), '/datasets/Blob_CSVDatast')]",
+				"[concat(variables('factoryId'), '/datasets/OnPremAccount1')]",
+				"[concat(variables('factoryId'), '/dataflows/Blob_to_AzureSQL')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSql_dst_Account')]",
+				"[concat(variables('factoryId'), '/datasets/CFT130Accounts')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MainPipeline_copy_Test')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQLAccounts_to_AzureBlob",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "OnPremAccount",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Blob_CSVDatast",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SQLAccounts_to_AzureBlob1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "SQLAccounts_to_AzureBlob",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "OnPremAccount1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Blob_CSVDatast",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Blob_to_AzureSQL",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "SQLAccounts_to_AzureBlob1",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Blob_to_AzureSQL",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					},
+					{
+						"name": "AzureSQL_to_CRM_CopyActivity",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Blob_to_AzureSQL",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DynamicsSink",
+								"writeBatchSize": 10,
+								"writeBehavior": "upsert",
+								"ignoreNullValues": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
 											"name": "AccountId",
 											"type": "Int32"
 										},
