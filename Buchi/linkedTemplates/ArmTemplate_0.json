@@ -775,7 +775,14 @@
 					{
 						"name": "SQLAccounts_to_AzureBlob1",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "SQLAccounts_to_AzureBlob",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -820,7 +827,14 @@
 					{
 						"name": "Blob_to_AzureSQL",
 						"type": "ExecuteDataFlow",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "SQLAccounts_to_AzureBlob1",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -850,7 +864,14 @@
 					{
 						"name": "AzureSQL_to_CRM_CopyActivity",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Blob_to_AzureSQL",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
