@@ -239,6 +239,14 @@
 									"name": "emailaddress1",
 									"type": "String"
 								}
+							},
+							{
+								"source": {
+									"name": "AccountId"
+								},
+								"sink": {
+									"name": "accountnumber"
+								}
 							}
 						]
 					}
