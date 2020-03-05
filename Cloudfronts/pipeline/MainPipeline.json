@@ -112,7 +112,7 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "AzureSQL_to_CRM_CopyActivity",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
