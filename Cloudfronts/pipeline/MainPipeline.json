@@ -162,16 +162,6 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "AccountId",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "accountnumber",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
 									"name": "Name",
 									"type": "String"
 								},
@@ -218,16 +208,6 @@
 								"sink": {
 									"name": "address1_line3",
 									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "CreditLimit",
-									"type": "Decimal"
-								},
-								"sink": {
-									"name": "creditlimit",
-									"type": "Decimal"
 								}
 							},
 							{
