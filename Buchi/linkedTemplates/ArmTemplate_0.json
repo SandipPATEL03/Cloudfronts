@@ -731,7 +731,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "SQLAccounts_to_AzureBlob",
+						"name": "SQLAccount_to_AzureBlob",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -776,11 +776,11 @@
 						]
 					},
 					{
-						"name": "SQLAccounts_to_AzureBlob1",
+						"name": "SQLAccount1_to_AzureBlob1",
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "SQLAccounts_to_AzureBlob",
+								"activity": "SQLAccount_to_AzureBlob",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -832,7 +832,7 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "SQLAccounts_to_AzureBlob1",
+								"activity": "SQLAccount1_to_AzureBlob1",
 								"dependencyConditions": [
 									"Completed"
 								]
